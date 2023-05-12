@@ -10,7 +10,12 @@ const Bookings = () => {
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/bookings?email=${user?.email}`)
+    fetch(`http://localhost:5000/bookings?email=${user?.email}`, {
+      method: "GET",
+      headers: {
+        authorization: `bearer ${localStorage.getItem("jwt-token")}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => setBookings(data))
       .catch((error) => console.log(error));
