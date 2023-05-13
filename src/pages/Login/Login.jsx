@@ -9,6 +9,7 @@ import {
 import img from "../../assets/images/login/login.svg";
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
+import SocialLogIn from "../Shared/SocialLogIn/SocialLogIn";
 
 const Login = () => {
   const location = useLocation();
@@ -26,21 +27,8 @@ const Login = () => {
     signIn(email, password)
       .then((result) => {
         const user = result.user;
-        const loggedUser = { user };
+        navigate(from, { replace: true });
         // console.log(user);
-
-        fetch("http://localhost:5000/jwt", {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify(loggedUser),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            // console.log(data);
-            navigate(from, { replace: true });
-            //not recommended to store token in local storage
-            localStorage.setItem("jwt-token", data.token);
-          });
       })
       .catch((error) => console.log(error));
   };
@@ -94,8 +82,9 @@ const Login = () => {
               New to Car Doctors{" "}
               <Link className="text-orange-600 font-bold" to="/signup">
                 Sign Up
-              </Link>{" "}
+              </Link>
             </p>
+            <SocialLogIn />
           </div>
         </div>
       </div>

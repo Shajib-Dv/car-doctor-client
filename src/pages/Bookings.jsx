@@ -3,11 +3,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import BookingTable from "./Home/BookingTable";
+import { useNavigate } from "react-router-dom";
 
 const Bookings = () => {
   const [bookings, setBookings] = useState([]);
   const [deleted, setDeleted] = useState(false);
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`http://localhost:5000/bookings?email=${user?.email}`, {
@@ -17,7 +19,13 @@ const Bookings = () => {
       },
     })
       .then((res) => res.json())
-      .then((data) => setBookings(data))
+      .then((data) => {
+        if (!data.error) {
+          setBookings(data);
+        } else {
+          navigate("/", { replace: true });
+        }
+      })
       .catch((error) => console.log(error));
   }, [deleted]);
   //   console.log(bookings);
@@ -43,7 +51,7 @@ const Bookings = () => {
           </thead>
           <tbody>
             {bookings &&
-              bookings.map((booking) => (
+              bookings?.map((booking) => (
                 <BookingTable
                   key={booking._id}
                   booking={booking}

@@ -1,9 +1,10 @@
 /** @format */
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import img from "../../assets/images/login/login.svg";
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
+import SocialLogIn from "../Shared/SocialLogIn/SocialLogIn";
 
 const SignUp = () => {
   const { createUser } = useContext(AuthContext);
@@ -14,12 +15,13 @@ const SignUp = () => {
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(name, email, password);
+    const navigate = useNavigate();
 
     createUser(email, password)
       .then((result) => {
         const user = result.user;
-        console.log(user);
+        // console.log(user);
+        navigate("/", { replace: true });
       })
       .catch((error) => console.log(error));
   };
@@ -81,11 +83,12 @@ const SignUp = () => {
               </div>
             </form>
             <p className="my-4 text-center">
-              Already Have an Account?{" "}
+              Already Have an Account?
               <Link className="text-orange-600 font-bold" to="/login">
                 Login
-              </Link>{" "}
+              </Link>
             </p>
+            <SocialLogIn />
           </div>
         </div>
       </div>
