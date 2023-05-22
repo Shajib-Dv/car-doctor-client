@@ -8,9 +8,12 @@ const BookingTable = ({ booking, setDeleted, deleted }) => {
   const handleDelete = (id) => {
     const isDelete = confirm("Do you want to delete");
     if (isDelete) {
-      fetch(`http://localhost:5000/bookings/${id}`, {
-        method: "DELETE",
-      })
+      fetch(
+        `https://car-doctor-server-jz2aatdc9-shajib-dv.vercel.app/bookings/${id}`,
+        {
+          method: "DELETE",
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           setDeleted(!deleted);
@@ -23,11 +26,14 @@ const BookingTable = ({ booking, setDeleted, deleted }) => {
   };
 
   const handleConfirm = (id) => {
-    fetch(`http://localhost:5000/bookings/${id}`, {
-      method: "PATCH",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ status: true }),
-    })
+    fetch(
+      `https://car-doctor-server-jz2aatdc9-shajib-dv.vercel.app/bookings/${id}`,
+      {
+        method: "PATCH",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ status: true }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.modifiedCount > 0) {

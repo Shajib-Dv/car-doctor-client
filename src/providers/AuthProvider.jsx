@@ -45,7 +45,7 @@ const AuthProvider = ({ children }) => {
       setUser(currentUser);
       // console.log('current user', currentUser);
       if (currentUser?.email) {
-        fetch("http://localhost:5000/jwt", {
+        fetch("https://car-doctor-server-jz2aatdc9-shajib-dv.vercel.app/jwt", {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify(currentUser),

@@ -12,17 +12,22 @@ const Bookings = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/bookings?email=${user?.email}`, {
-      method: "GET",
-      headers: {
-        authorization: `bearer ${localStorage.getItem("jwt-token")}`,
-      },
-    })
+    fetch(
+      `https://car-doctor-server-jz2aatdc9-shajib-dv.vercel.app/bookings?email=${user?.email}`,
+      {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+          authorization: `bearer ${localStorage.getItem("jwt-token")}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (!data.error) {
           setBookings(data);
         } else {
+          alert(data.message);
           navigate("/", { replace: true });
         }
       })
